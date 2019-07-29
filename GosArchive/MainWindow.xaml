@@ -1,0 +1,114 @@
+﻿<Window x:Class="GosArchive.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GosArchive"
+        xmlns:local2="clr-namespace:GosArchive.KeyboardN"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Name="Window"
+        WindowStyle="None"
+        WindowState="Maximized"
+        Title="MainWindow" Height="1080" Width="1920"
+        Closing="XMainWindow_Closing"
+        Loaded="MainWindow_OnLoaded"
+        PreviewMouseMove="OnMoveOverMainUI">
+  <DockPanel >
+    <Grid Name="www">
+      <DockPanel Name="mainUI">
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" >
+          <Grid >
+            <Grid >
+              <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+
+              <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="0.1*"/>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="0.171*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Background>
+                  <LinearGradientBrush StartPoint="0,0" EndPoint="0.5,0">
+                    <GradientStop Color="#5E090C" Offset="0"/>
+                    <GradientStop Color="#5E090C" Offset="1.0"/>
+                  </LinearGradientBrush>
+                </Grid.Background>
+                <StackPanel Orientation="Horizontal">
+                  <Button Grid.Row="0" Grid.Column="0" Background="#5E090C" Height="50" HorizontalAlignment="Center" Click="GoToMainClick" Margin="0" Name="button_All">
+                    <TextBlock Text="Главная" Style="{StaticResource TextBlockSearchStyle}"/>
+                  </Button>
+                  <Button Margin="8" Grid.Row="0" Grid.Column="0" Height="30" Width="30" HorizontalAlignment="Center" Click="Seach_down" Name="button1">
+                    <Button.Background>
+                      <ImageBrush ImageSource="Resources/graph.png"></ImageBrush>
+                    </Button.Background>
+                  </Button>
+                </StackPanel>
+                <Grid Grid.Column="1" Margin="0,0" Width="100" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent"
+                          TouchDown="Button_TouchDown" MouseLeftButtonDown="Button_MouseDown" TouchUp="Button_TouchUp" MouseUp="Button_MouseUp"
+                          TouchLeave="Button_TouchLeave" MouseLeave="Button_MouseLeave"/>
+
+                <Grid Grid.Column="1" Margin="0,0" Width="100" Height="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent"
+                      TouchDown="Button_TouchDown_Admin" MouseLeftButtonDown="Button_MouseDown_Admin" TouchUp="Button_TouchUp_Admin" MouseUp="Button_MouseUp_Admin"
+                      TouchLeave="Button_TouchLeave_Admin" MouseLeave="Button_MouseLeave_Admin"/>
+              </Grid>
+
+              <Grid Grid.Row="1" >
+
+                <ContentControl Panel.ZIndex="2" Name="controlontentControl" Grid.ColumnSpan="2" />
+              </Grid>
+
+              <!--<Canvas>
+                <Border Canvas.Top="52" Background="LightGray" x:Name="Border_Search" Style="{StaticResource BorderStyle}" CornerRadius="{StaticResource DrCornerRad}">
+                    <Canvas Height="350" Width="760" Margin="25">
+                        <local2:OnScreenKeyboard Canvas.Top="0" Canvas.Left="0" x:Name="onScreenKeyboard"/>
+                    </Canvas>
+                </Border>
+            </Canvas>-->
+                            <Border Grid.Row="0" Grid.Column="2"  Name="SeachBorder" HorizontalAlignment="Right" Width="250" DockPanel.Dock="Top" Background="#5E090C" Margin="7" CornerRadius="5">
+                <StackPanel Orientation="Horizontal" Width="240" Name="SearchPanel">
+                  <local:AutoCompleteTextBox Height="30" Width="215" x:Name="textBox1" DelayTime="500" Threshold="2" Margin="3"/>
+                  <Button Width="20" Height="20" Click="ButtonBase_OnClick" Name="Main_Search">
+                    <Button.Background>
+                      <ImageBrush ImageSource="pack://application:,,,/Resources/magnifier_white.png"/>
+                    </Button.Background>
+                  </Button>
+                </StackPanel>
+              </Border>
+            </Grid>
+
+            <Grid Margin="0,0" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent"
+TouchDown="Button_TouchDown" MouseLeftButtonDown="Button_MouseDown" TouchUp="Button_TouchUp" MouseUp="Button_MouseUp"
+TouchLeave="Button_TouchLeave" MouseLeave="Button_MouseLeave"/>
+            <Grid Margin="0,0" Width="100" Height="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent"
+      TouchDown="Button_TouchDown_Admin" MouseLeftButtonDown="Button_MouseDown_Admin" TouchUp="Button_TouchUp_Admin" MouseUp="Button_MouseUp_Admin"
+      TouchLeave="Button_TouchLeave_Admin" MouseLeave="Button_MouseLeave_Admin"/>
+            <Canvas Name="ScreenCanvas" ZIndex="200"/>
+            <Grid Name="LoadGrid" Style="{StaticResource GridLoadStyle}" Visibility="Collapsed">
+              <fa:ImageAwesome Name="LoadImg" Icon="CircleOutlineNotch" Spin="True" Foreground="Gray" Opacity="0.5" Width="120" Height="120"/>
+            </Grid>
+          </Grid>
+        </ScrollViewer>
+      </DockPanel>
+      <Canvas Background="Red" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Name="magnifierCanvas" IsHitTestVisible="False" Visibility="Collapsed">
+          <Ellipse Width="600" Height="600" Name="magnifierEllipse" StrokeThickness="3">
+            <Ellipse.Fill>
+              <VisualBrush x:Name="visualbrush" ViewboxUnits="Absolute"
+                       ViewportUnits="RelativeToBoundingBox" Viewport="0,0,1,1"/>
+            </Ellipse.Fill>
+            <Ellipse.Stroke>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="#AAA" />
+                <GradientStop Offset="1" Color="#111" />
+              </LinearGradientBrush>
+            </Ellipse.Stroke>
+          </Ellipse>
+        </Canvas>
+      </Canvas>
+    </Grid>
+  </DockPanel>
+</Window>

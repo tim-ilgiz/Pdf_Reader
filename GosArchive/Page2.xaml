@@ -1,0 +1,181 @@
+﻿<UserControl x:Class="GosArchive.Page2"
+      Name="xxx"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GosArchive"
+      mc:Ignorable="d" 
+      d:DesignHeight="1030" d:DesignWidth="1920"
+      Height="1030" Width="1920"
+      DataContext="{Binding ElementName=xxx}">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}" x:Key="pageBorder">
+            <Setter Property="Background" Value="AntiqueWhite" />
+            <Setter Property="Width" Value="540"  />
+            <Setter Property="Height" Value="900" />
+        </Style>
+
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2"
+                       SnapsToDevicePixels="true"
+                       Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                       StrokeDashArray="1 2"
+                       StrokeThickness="1" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <!--PAGE1-->
+        <Canvas ClipToBounds="True" Width="1080" HorizontalAlignment="Center">
+            <Border Canvas.Top="65" Style="{StaticResource pageBorder}" x:Name="page1">
+                <Grid>
+                    <Image Source="{Binding Image1}" Stretch="Fill" Margin="5"/>
+                    
+                </Grid>
+            </Border>
+            <!--PAGE1-->
+
+            <!--PAGE2-->
+            <Border Canvas.Left="540" Canvas.Top="65" Style="{StaticResource pageBorder}" x:Name="page2">
+                <Grid>
+                    <Image Source="{Binding Image2}" Stretch="Fill" Margin="5"/>
+                    
+                </Grid>
+            </Border>
+            <!--PAGE2-->
+
+            <!--ОБРАТНАЯ СТОРОНА PAGE3-->
+            <Border Canvas.Left="1080" Canvas.Top="65" Style="{StaticResource pageBorder}" x:Name="page3" >
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform  x:Name="page3Rotate" CenterY="{Binding Path=ActualHeight,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Border}}" />
+                        <TranslateTransform x:Name="page3Translate" />
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Border.Clip>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="0,900" >
+                            <PolyLineSegment  x:Name="page3clip"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Border.Clip>
+                <Grid>
+                    <FlowDocumentScrollViewer IsToolBarVisible="false" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <FlowDocument>
+                            <Paragraph FontSize="16">
+
+                            </Paragraph>
+                        </FlowDocument>
+                    </FlowDocumentScrollViewer>
+                    <Image Source="{Binding Image3}" Stretch="Fill" Margin="5"/>
+                    
+                </Grid>
+            </Border>
+            <!--ОБРАТНАЯ СТОРОНА PAGE3-->
+
+            <!--PAGE4-->
+            <Border Canvas.Left="540" Canvas.Top="65" Style="{StaticResource pageBorder}"  x:Name="page4" >
+                <Border.Clip>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="540,900" >
+                            <PolyLineSegment x:Name="page4clip"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Border.Clip>
+                <Grid >
+                    <Image Source="{Binding Image4}" Stretch="Fill" Margin="5"/>
+                    
+                </Grid>
+            </Border>
+            <!--PAGE4-->
+
+            <Line Width="540" Height="900" Canvas.Left="{Binding Path=(Canvas.Left),ElementName=page4}" Canvas.Top="{Binding Path=(Canvas.Top),ElementName=page4}" 
+            X1="{Binding Path=Points[0].X,ElementName=page4clip,FallbackValue=0}" 
+            Y1="{Binding Path=Points[0].Y,ElementName=page4clip,FallbackValue=0}" 
+            X2="{Binding Path=Points[1].X,ElementName=page4clip,FallbackValue=0}" 
+            Y2="{Binding Path=Points[1].Y,ElementName=page4clip,FallbackValue=0}"
+            Stroke="Black" StrokeThickness="1">
+                <Line.Effect>
+                    <DropShadowEffect Color="DarkGray" Opacity="0.5" />
+                </Line.Effect>
+            </Line>
+            <!--<Thumb Canvas.Left="300" Canvas.Top="230" Width="20" Height="20" Background="Red" 
+               DragDelta="Thumb_DragDelta" Cursor="Hand" Opacity="0.2">
+        </Thumb>-->
+
+
+        </Canvas>
+        <Button Name="Button_ImageClick" Visibility="{Binding IsEnableProperty}" Click="Btn2_OnClickNext" HorizontalAlignment="Right" 
+                Width="100" Height="180" Margin="0,0,100,0" >
+            <Button.Background>
+                <ImageBrush x:Name="Button_Background"  ImageSource="Resources/right-arrow_red.png"></ImageBrush>
+            </Button.Background>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard HandoffBehavior="Compose">
+                        <Storyboard  CurrentTimeInvalidated="Storyboard_CurrentTimeInvalidated"
+                                     FillBehavior="Stop" >
+                            <DoubleAnimation From="0" To="-1080"  BeginTime="0:0:0" Duration="0:0:1"
+                                             Storyboard.TargetName="page3Translate" Storyboard.TargetProperty="X" />
+                            <DoubleAnimation From="0" To="-150" BeginTime="0:0:0" Duration="0:0:0.5" AutoReverse="True"
+                                             Storyboard.TargetName="page3Translate" Storyboard.TargetProperty="Y" >
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <Button Visibility="{Binding IsEnablePropertyBack}" Click="Btn2_OnClickDown" HorizontalAlignment="Left" 
+                Width="{Binding ElementName=Button_ImageClick, Path=Width}" Height="{Binding ElementName=Button_ImageClick, Path=Height}" Margin="100,0,0,0" RenderTransformOrigin="0.5,0.5" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1" ScaleX="-1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Background>
+                <ImageBrush ImageSource="{Binding ElementName=Button_Background, Path=ImageSource}"></ImageBrush>
+            </Button.Background>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard HandoffBehavior="Compose">
+                        <Storyboard  CurrentTimeInvalidated="Storyboard_CurrentTimeInvalidated"
+                                     FillBehavior="Stop" >
+                            <DoubleAnimation From="-1000" To="0"  BeginTime="0:0:0" Duration="0:0:1"
+                                             Storyboard.TargetName="page3Translate" Storyboard.TargetProperty="X" />
+                            <DoubleAnimation From="0" To="-150" BeginTime="0:0:0" Duration="0:0:0.5" AutoReverse="True"
+                                             Storyboard.TargetName="page3Translate" Storyboard.TargetProperty="Y" >
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</UserControl>
